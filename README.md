@@ -14,22 +14,22 @@ They view the quoting system as a four step process
 ### Step 2: Select Cardboard grade
 F-BoxCo offer a variety of grades of cardboard, each altering the price per M^2:
 
- - A grade: £0.20 M^2
- - B grade: £0.10 M^2
- - C grade: £0.05 M^2 (this option should not be available for boxes larger than 2M^2)
+ - A grade: $0.20 M^2
+ - B grade: $0.10 M^2
+ - C grade: $0.05 M^2 (this option should not be available for boxes larger than 2M^2)
 
 ### Step 3: Select Print Quality
 A variety of printing options are available for any branding / logos which are required:
 
- - 3 colour printing: £0.20 M^2
- - 2 colour printing: £0.10 M^2
- - Black only printing: £0.05 M^2
- - No printing (plain cardboard): £0.00
+ - 3 colour printing: $0.20 M^2
+ - 2 colour printing: $0.10 M^2
+ - Black only printing: $0.05 M^2
+ - No printing (plain cardboard): $0.00
  - F-BoxCo branding: 5% discount on total price
 
 ### Step 4: Optional extras
- - Handles: £0.10 per box
- - Reinforced bottom: £0.05 per box (only available with grade A cardboard
+ - Handles: $0.10 per box
+ - Reinforced bottom: $0.05 per box (only available with grade A cardboard
 
 
 ## What do we want to see?
