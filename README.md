@@ -36,7 +36,3 @@ A variety of printing options are available for any branding / logos which are r
 By the end of this four step process, the user should see an accurate quote taking into account all of the options and quantities they have selected.
 
 If the user has picked any mutually exclusive options (for example, a box size of larger than 2M^2 and grade C cardboard), they should not receive the quote but a validation error telling them how to fix their quote.
-
-Our technical expectations:
- - You can use any frameworks, libraries or architecture of your choice.
- - A test suite proving correctness of the business logic (end-to-end acceptance testing is a nice extra)
