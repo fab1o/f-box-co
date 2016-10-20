@@ -1,279 +1,312 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" ng-app="app">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>FantasticBoxCo</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-  <meta name="author" content="@alliants">
-  <link rel="stylesheet" media="all" href="/css/application.css">
-  <link href='https://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'>
-  <link rel="shortcut icon" href="/favicon.ico">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>FantasticBoxCo</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <meta name="author" content="@alliants">
+    <link rel="stylesheet" media="all" href="css/application.css">
+    <link href='https://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'>
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.3.3/jasmine.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.3.3/jasmine.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.3.3/jasmine-html.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.3.3/boot.min.js"></script>
+
+    <script type="text/javascript" src="https://code.angularjs.org/1.4.8/angular-mocks.js"></script>
+
 </head>
-<body>
+<body ng-controller="OrderController as order" ng-cloak>
 
-  <header>
+<header>
     <h1 class="logo">FantasticBoxCo</h1>
-  </header>
+</header>
 
-  <main>
+<main>
     <div class="container">
-      <aside>
-        <ul class="progress">
-          <li>
-            <a href="#step-1" class="step step-1 is-active">
-              <div class="step-number">1</div>
-              <h3 class="step-heading">Dimensions &amp; Quantity</h3>
-              <dl>
-                <dt>Width:</dt>
-                <dd>0.0m</dd>
-                <dt>Height:</dt>
-                <dd>0.0m</dd>
-                <dt>Length:</dt>
-                <dd>0.0m</dd>
-                <dt>Quantity:</dt>
-                <dd>0</dd>
-              </dl>
-            </a>
-          </li>
-          <li>
-            <a href="#step-2" class="step step-2">
-              <div class="step-number">2</div>
-              <h3 class="step-heading">Cardboard Grade</h3>
-              <span class="step-value">-</span>
-            </a>
-          </li>
-          <li>
-            <a href="#step-3" class="step step-3">
-              <div class="step-number">3</div>
-              <h3 class="step-heading">Print Quality</h3>
-              <span class="step-value">-</span>
-            </a>
-          </li>
-          <li>
-            <a href="#step-4" class="step step-4">
-              <div class="step-number">4</div>
-              <h3 class="step-heading">Optional Extras</h3>
-              <span class="step-value">-</span>
-            </a>
-          </li>
-          <li>
-            <a href="#total-cost" class="step step-total-cost">
-              <h3 class="step-total-cost-heading">Total Cost</h3>
-              <div class="step-total-cost-value">&pound;0.00</div>
-            </a>
-          </li>
-        </ul>
-      </aside>
+        <aside>
+            <ul class="progress">
+                <li>
+                    <a href="#step-1" class="step step-1 is-active">
+                        <div class="step-number">1</div>
+                        <h3 class="step-heading">Dimensions &amp; Quantity</h3>
+                        <dl>
+                            <dt>Width:</dt>
+                            <dd>{{ order.step1.width | number : 2 }}m</dd>
+                            <dt>Height:</dt>
+                            <dd>{{ order.step1.height | number : 2 }}m</dd>
+                            <dt>Length:</dt>
+                            <dd>{{ order.step1.length | number : 2 }}m</dd>
+                            <dt>Quantity:</dt>
+                            <dd>{{ order.step1.quantity }}</dd>
+                        </dl>
+                    </a>
+                </li>
+                <li>
+                    <a href="#step-2" class="step step-2">
+                        <div class="step-number">2</div>
+                        <h3 class="step-heading">Cardboard Grade</h3>
+                        <span class="step-value">{{ order.step2.find(order.step2.choice).name }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#step-3" class="step step-3">
+                        <div class="step-number">3</div>
+                        <h3 class="step-heading">Print Quality</h3>
+                        <span class="step-value">{{ order.step3.find(order.step3.choice).name }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#step-4" class="step step-4">
+                        <div class="step-number">4</div>
+                        <h3 class="step-heading">Optional Extras</h3>
+                        <span class="step-value" ng-repeat="option in order.step4.options | filter:{enabled: true}">
+                            {{ option.name }}<br>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#total-cost" class="step step-total-cost">
+                        <h3 class="step-total-cost-heading">Total Cost</h3>
+                        <div class="step-total-cost-value">&pound;{{ order.totalCost() | number : 2 }}</div>
+                    </a>
+                </li>
+            </ul>
+        </aside>
 
-      <section>
+        <section>
 
-        <div id="step-1" class="content-step">
-          <h2>Step 1 - Dimensions &amp; Quantity</h2>
+            <div id="step-1" class="content-step">
+                <h2>Step 1 - Dimensions &amp; Quantity</h2>
 
-          <p class="intro">
-            Enter the width, height, length and quantity of the box(es) you require.
-          </p>
+                <p class="intro">
+                    Enter the width, height, length and quantity of the box(es) you require.
+                </p>
 
-          <div class="form-row">
-            <label for="width">Width:</label>
-            <input type="number" name="width" id="width" value="0" min="0" step="0.01">
-          </div>
+                <div class="form-row">
+                    <label for="width">Width:</label>
+                    <input type="number" name="width" id="width" ng-model="order.step1.width" value="0" min="0" step="0.01">
+                </div>
 
-          <div class="form-row">
-            <label for="height">Height:</label>
-            <input type="number" name="height" id="height" value="0" min="0" step="0.01">
-          </div>
+                <div class="form-row">
+                    <label for="height">Height:</label>
+                    <input type="number" name="height" id="height" ng-model="order.step1.height" value="0" min="0" step="0.01">
+                </div>
 
-          <div class="form-row">
-            <label for="length">Length:</label>
-            <input type="number" name="length" id="length" value="0" min="0" step="0.01">
-          </div>
+                <div class="form-row">
+                    <label for="length">Length:</label>
+                    <input type="number" name="length" id="length" ng-model="order.step1.length" value="0" min="0" step="0.01">
+                </div>
 
-          <div class="form-row">
-            <label for="quantity">Quantity:</label>
-            <input type="number" name="quantity" id="quantity" value="0" min="0" step="1">
-          </div>
+                <div class="form-row">
+                    <label for="quantity">Quantity:</label>
+                    <input type="number" name="quantity" id="quantity" ng-model="order.step1.quantity" value="0" min="0" step="1">
+                </div>
 
-          <div class="form-actions">
-            <button type="button" class="btn btn-primary btn-next" disabled>
-              Next
-            </buttton>
-          </div>
-        </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-primary btn-next" ng-disabled="!order.step1.isValid" onclick="location.href='#step-2'">
+                        Next
+                    </button>
+                </div>
+            </div>
 
 
-        <div id="step-2" class="content-step">
-          <h2>Step 2 - Cardboard Grade</h2>
+            <div id="step-2" class="content-step">
+                <h2>Step 2 - Cardboard Grade</h2>
 
-          <p class="intro">
-            <strong>FantasticBoxCo</strong> offer a variety of grades of cardboard, each altering the price per m<sup>2</sup>:
-​          </p>
+                <p class="intro">
+                    <strong>FantasticBoxCo</strong> offer a variety of grades of cardboard, each altering the price per m<sup>2</sup>:
+                    ​          </p>
 
-          <ol class="btn-radios-list">
-            <li>
-              <label>
-                <input type="radio" name="cardboard-grade" value="A">
+                <ol class="btn-radios-list">
+                    <li>
+                        <label>
+                            <input type="radio" name="cardboard-grade" value="A" ng-model="order.step2.choice">
                 <span class="btn btn-radio">
                   A Grade<br>&pound;0.20 m<sup>2</sup>
                 </span>
-              </label>
-            </li>
-            <li>
-              <label>
-                <input type="radio" name="cardboard-grade" value="B">
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="radio" name="cardboard-grade" value="B" ng-model="order.step2.choice">
                 <span class="btn btn-radio">
                   B Grade<br>&pound;0.10 m<sup>2</sup>
                 </span>
-              </label>
-            </li>
-            <li>
-              <label>
-                <input type="radio" name="cardboard-grade" value="C">
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="radio" name="cardboard-grade" value="C" ng-model="order.step2.choice" ng-disabled="!order.step2.options[2].validation(order.step1.area).result">
                 <span class="btn btn-radio">
                   C Grade<br>&pound;0.05 m<sup>2</sup>
                 </span>
-              </label>
-            </li>
-          </ol>
+                        </label>
+                    </li>
+                </ol>
 
-          <div class="form-actions">
-            <button type="button" class="btn btn-back">
-              back
-            </buttton>
-            <button type="button" class="btn btn-primary btn-next">
-              Next
-            </buttton>
-          </div>
-        </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-back" onclick="location.href='#step-1'">
+                        back
+                    </button>
+                    <button type="button" class="btn btn-primary btn-next" ng-disabled="!order.step2.chosen" onclick="location.href='#step-3'">
+                        Next
+                    </button>
+                </div>
+            </div>
 
+            <div id="step-3" class="content-step">
+                <h2>Step 3 - Print Quality</h2>
 
-        <div id="step-3" class="content-step">
-          <h2>Step 3 - Print Quality</h2>
+                <p class="intro">
+                    A variety of printing options are available for any branding / logos which are required:
+                </p>
 
-          <p class="intro">
-            A variety of printing options are available for any branding / logos which are required:
-          </p>
-
-          <ol class="btn-radios-list">
-            <li>
-              <label>
-                <input type="radio" name="print-quality" value="3-color">
+                <ol class="btn-radios-list">
+                    <li>
+                        <label>
+                            <input type="radio" name="print-quality" value="3-color" ng-model="order.step3.choice">
                 <span class="btn btn-radio">
                   3 colours<br>&pound;0.20 m<sup>2</sup>
                 </span>
-              </label>
-            </li>
-            <li>
-              <label>
-                <input type="radio" name="print-quality" value="2-color">
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="radio" name="print-quality" value="2-color" ng-model="order.step3.choice">
                 <span class="btn btn-radio">
                   2 colours<br>&pound;0.10 m<sup>2</sup>
                 </span>
-              </label>
-            </li>
-            <li>
-              <label>
-                <input type="radio" name="print-quality" value="black-only">
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="radio" name="print-quality" value="black-only" ng-model="order.step3.choice">
                 <span class="btn btn-radio">
                   Black only<br>&pound;0.05 m<sup>2</sup>
                 </span>
-              </label>
-            </li>
-            <li>
-              <label>
-                <input type="radio" name="print-quality" value="no-printing">
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="radio" name="print-quality" value="no-printing" ng-model="order.step3.choice">
                 <span class="btn btn-radio">
                   No printing<br>&pound;0.00
                 </span>
-              </label>
-            </li>
-            <li>
-              <label>
-                <input type="radio" name="print-quality" value="FantasticBoxCo-branding">
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="radio" name="print-quality" value="FantasticBoxCo-branding" ng-model="order.step3.choice">
                 <span class="btn btn-radio">
                   <strong>FantasticBoxCo</strong> branding<br>5% discount on total price
                 </span>
-              </label>
-            </li>
-          </ol>
+                        </label>
+                    </li>
+                </ol>
 
-          <div class="form-actions">
-            <button type="button" class="btn btn-back">
-              back
-            </buttton>
-            <button type="button" class="btn btn-primary btn-next">
-              Next
-            </buttton>
-          </div>
-        </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-back" onclick="location.href='#step-2'">
+                        back
+                    </button>
+                    <button type="button" class="btn btn-primary btn-next" ng-disabled="!order.step3.chosen" onclick="location.href='#step-4'">
+                        Next
+                    </button>
+                </div>
+            </div>
 
+            <div id="step-4" class="content-step">
+                <h2>Step 4 - Optional Extras</h2>
 
-        <div id="step-4" class="content-step">
-          <h2>Step 4 - Optional Extras</h2>
-
-          <ol class="btn-radios-list">
-            <li>
-              <label>
-                <input type="checkbox" name="optional-extras" value="handles">
+                <ol class="btn-radios-list">
+                    <li>
+                        <label>
+                            <input type="checkbox" name="optional-extras" value="handles" ng-model="order.step4.options[0].enabled">
                 <span class="btn btn-radio">
                   Handles<br>&pound;0.10 per box
                 </span>
-              </label>
-            </li>
-            <li>
-              <label>
-                <input type="checkbox" name="optional-extras" value="reinforced-bottom">
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" name="optional-extras" value="reinforced-bottom" ng-model="order.step4.options[1].enabled">
                 <span class="btn btn-radio">
                   Reinforced bottom<br>&pound;0.05 per box<br>
                   <small>(only available with grade A cardboard)</small>
                 </span>
-              </label>
-            </li>
-          </ol>
+                        </label>
+                    </li>
+                </ol>
 
-          <div class="form-actions">
-            <button type="button" class="btn btn-back">
-              back
-            </buttton>
-            <button type="button" class="btn btn-primary btn-next">
-              Finish
-            </buttton>
-          </div>
-        </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-back" onclick="location.href='#step-3'">
+                        back
+                    </button>
+                    <button type="button" class="btn btn-primary btn-next" ng-click="order.finish()" onclick="location.href='#total-cost'">
+                        Finish
+                    </button>
+                </div>
+            </div>
 
 
-        <div id="total-cost" class="content-step">
-          <h2>Total Cost</h2>
+            <div id="total-cost" class="content-step">
 
-          <dl class="breakdown">
-            <dt>Dimensions &amp; Quantity:</dt>
-            <dd>3 &times; 10(W)&times;15.5(H)&times;13.24(L)</dd>
+                <div ng-show="order.isValid">
 
-            <dt>Cardboard Grade:</dt>
-            <dd>A grade</dd>
+                    <h2>Total Cost</h2>
 
-            <dt>Print Quality:</dt>
-            <dd>3 colours</dd>
+                    <dl class="breakdown">
+                        <dt>Dimensions &amp; Quantity:</dt>
+                        <dd>{{ order.step1.quantity }} &times; {{ order.step1.width | number : 2 }}(W)&times;{{ order.step1.height | number : 2 }}(H)&times;{{ order.step1.length | number : 2 }}(L)</dd>
 
-            <dt>Optional Extras:</dt>
-            <dd>
-              <ol>
-                <li>Handles</li>
-                <li>Reinforce bottoms</li>
-              </ol>
-            </dd>
+                        <dt>Cardboard Grade:</dt>
+                        <dd>{{ order.step2.find(order.step2.choice).name }}</dd>
 
-            <dt>Total Cost:</dt>
-            <dd>&pound;0.00</dd>
-          </dl>
-        </div>
+                        <dt>Print Quality:</dt>
+                        <dd>{{ order.step3.find(order.step3.choice).name }}</dd>
 
-      </section>
+                        <dt>Optional Extras:</dt>
+                        <dd>
+                            <ol>
+                                <li ng-repeat="option in order.step4.options | filter:{enabled: true}">
+                                    {{ option.name }}
+                                </li>
+                            </ol>
+                        </dd>
+
+                        <dt>Total Cost:</dt>
+                        <dd>&pound;{{ order.totalCost() | number : 2 }}</dd>
+                    </dl>
+
+                </div>
+
+                <div ng-show="!order.isValid">
+                    <dl class="breakdown">
+                        <dd>
+                            <ol>
+                                <li ng-repeat="error in order.validation.errors">
+                                    {{:: error.message }}
+                                    <br>
+                                    To fix it: {{:: error.fix }}
+                                </li>
+                            </ol>
+                        </dd>
+                    </dl>
+
+                </div>
+
+            </div>
+
+        </section>
     </div>
-  </main>
+</main>
 
-  <script type="text/javascript" src="/js/application.js"></script>
+<script type="text/javascript" src="js/application.js"></script>
+<script type="text/javascript" src="test/main.js"></script>
 </body>
 </html>
